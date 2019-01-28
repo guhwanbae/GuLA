@@ -21,7 +21,7 @@ v.setItem('C', 3)
 print(v)
 
 # Doubling a vector, v.
-v_double = gvec.multiply(v, 2)
+v_double = v * 2  # Elementwise multiplication.
 print('Doubled vector, v_double')
 print(v_double)
 
@@ -30,14 +30,17 @@ u = gvec.vector(v.domain, {'A':5, 'C':10})
 print('Vector, u, with same domain as v.')
 print(u)
 
-# Add vector v and u by using global procedure, add(v, u).
+# Add vector v and u.
 print('Vector addtion, w = u + v')
-w = gvec.add(v, u)
-print('Vector, w')
+w = u + v
 print(w)
 
-# Add vector u to v by using a method.
-print('Add vector u to w by using instance method')
-w.add(u)
-print('Vector, w')
+# Subtract vector v and u.
+print('Vector subtraction, w = u - v')
+w = u - v
+print(w)
+
+# Elementwise multiplication, vector v and u.
+print('Elementwise multiplication, w = u * v')
+w = u * v
 print(w)

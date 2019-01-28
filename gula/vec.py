@@ -2,6 +2,8 @@
 # Date    : Sun Jan 27
 # Summary : Modeling a vector.
 
+import numbers
+
 class vector:
     """
     Vector can be expressed as a function that map domain to the corresponding field.
@@ -15,15 +17,54 @@ class vector:
     def getItem(self, key):
         return self.func[key] if key in self.func else 0
 
-    def setItem(self, key, value):
+    def setItem(self, key, val):
         if key in self.domain:
-            self.func[key] = value
+            self.func[key] = val
 
-    def add(self, other):
-        if self.domain is other.domain:
+    def __add__(self, oth):
+        """
+        Elementwise addition.
+        """
+        output = vector(self.domain, {})
+        if isinstance(oth, numbers.Number):
             for d in self.domain:
-                self.func[d] = self.func[d] + other.getItem(d)
-                
+                output.func[d] = self.getItem(d) + oth
+        elif isinstance(oth, vector):
+            for d in self.domain:
+                output.func[d] = self.getItem(d) + oth.getItem(d)
+        else:
+            return None
+        return output
+
+    def __sub__(self, oth):
+        """
+        Elementwise subtraction.
+        """
+        output = vector(self.domain, {})
+        if isinstance(oth, numbers.Number):
+            output = self + (-oth)
+        elif isinstance(oth, vector):
+            for d in self.domain:
+                output.func[d] = self.getItem(d) - oth.getItem(d)
+        else:
+            return None
+        return output
+
+    def __mul__(self, oth):
+        """
+        Elementwise multiplication.
+        """
+        output = vector(self.domain, {})
+        if isinstance(oth, numbers.Number):
+            for d in self.domain:
+                output.func[d] = self.getItem(d) * oth
+        elif isinstance(oth, vector):
+            for d in self.domain:
+                output.func[d] = self.getItem(d) * oth.getItem(d)
+        else:
+            return None
+        return output
+
     def __str__(self):
         label = 'D | F'
         label = label + '\n' + '-----'
@@ -36,13 +77,3 @@ def zeros(domain):
     Return a zero vector.
     """
     return vector(domain, {}) # It has empty entries.
-
-def multiply(v, alpha):
-    """
-    Return a vector elementwise multiplied.
-    """
-    return vector(v.domain, {d:alpha*val for d, val in v.func.items()})
-
-def add(u, v):
-    if u.domain is v.domain:
-        return vector(u.domain, {d:v.getItem(d)+u.getItem(d) for d in u.domain})
