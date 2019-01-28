@@ -1,40 +1,38 @@
+# Author  : Gu-hwan Bae
+# Date    : Sun Jan 28
+# Summary : Encription by using Galois field.
+
 import numpy as np
+import gula.galois as gf
 
-# Express Galois Field, GF(2), by object.
-class GF2:
-    def __init__(self, bit):
-        self.bit = bit
-    def __add__(self, oth):
-        return GF2(0) if self.bit is oth.bit else GF2(1)
-    def __sub__(self, oth):
-        return self + oth
-    def __repr__(self):
-        return str(self.bit)
-    def __str__(self):
-        return str(self.bit)
+def randGF2Vec(length):
+    output = np.full(length, gf.GF2(1))
+    coords = np.random.randint(low=0, high=length, size=int(length/2))
+    output[coords] = gf.GF2(0)
+    return output
 
-def getRandomVector(length):
-    return np.array([GF2(1) if np.random.rand() > 0.5 else GF2(0) for i in range(length)])
-
-def printGF2Vector(vector):
-    print([gf.bit for gf in vector])
-
+length = 8
 # Make a arbitrary plain message as vector.
-plain = getRandomVector(8)
+P = randGF2Vec(length)
 # Make a arbitrary key.
-key = getRandomVector(8)
+K = randGF2Vec(length)
 
-print('Plain message =', plain)
+print('Plain message')
+print('P =', P)
 
 # Seperate a plain message and store in two variables.
 # Even if someone get a one coded message, he can not
 # get the plain message unless get both coded messages.
-coded_a = key
-coded_b = plain - key
+A = K
+B = P - K
 
+print('Coded message A')
+print('A = Key =', A)
 
-print('Coded message A =', coded_a)
-print('Coded message B =', coded_b)
+print('Coded message B')
+print('B = P - Key =', B)
 
 # Plain message is a sum of two coded message.
-print('msg A + msg B =', coded_a + coded_b)
+print('Plane message can be decoded by added two coded message.')
+print('A + B = P =', A + B)
+
