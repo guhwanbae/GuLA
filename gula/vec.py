@@ -10,12 +10,13 @@ class vector:
     It describe a vector of the real number field.
     Domain set is represented by a set. And function is represented by a dictionary.
     """
-    def __init__(self, label, func):
+    def __init__(self, label, func, zero=0):
         self.domain = label
         self.func = func
+        self.zero = zero
 
     def getItem(self, key):
-        return self.func[key] if key in self.func else 0
+        return self.func[key] if key in self.func else self.zero
 
     def setItem(self, key, val):
         if key in self.domain:

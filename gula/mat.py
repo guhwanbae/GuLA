@@ -11,12 +11,13 @@ class matrix:
     to represent indice of row and column domain. And matrix class represent
     a entries by dictionary. It can be represented by sparse matrix.
     """
-    def __init__(self, label, func):
+    def __init__(self, label, func, zero=0):
         self.domain = label
         self.func = func
+        self.zero = zero
 
     def getItem(self, key):
-        return self.func[key] if key in self.func else 0
+        return self.func[key] if key in self.func else self.zero
 
     def setItem(self, key, val):
         (row, col) = self.domain
