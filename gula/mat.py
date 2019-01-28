@@ -1,11 +1,10 @@
 # Author  : Gu-hwan Bae
-# Date    : Sun Jan 27
-# Summary : Matrix modeling, and its own operations, utilities.
+# Date    : Sun Jan 28
+# Summary : Modeling a matrix.
 
-def cartesianProduct(set_a, set_b):
-    return [(a, b) for a in set_a for b in set_b]
+import gula.util as gutil
 
-class Matrix:
+class matrix:
     """
     Modeling a matrix as python class. It has tuple, in constructor as label,
     to represent indice of row and column domain. And matrix class represent
@@ -20,7 +19,7 @@ class Matrix:
 
     def setItem(self, key, value):
         (rows, cols) = self.domain
-        indice = cartesianProduct(rows, cols)
+        indice = gutil.cartesianProduct(rows, cols)
         if key not in indices:
             return None
         self.func[key] = value
@@ -32,7 +31,7 @@ class Matrix:
         (rows, cols) = self.domain
         if index not in rows:
             return []
-        domain = cartesianProduct(set(index), cols)
+        domain = gutil.cartesianProduct(set(index), cols)
         entries = [self.getItem(key) for key in domain]
         return entries
 
@@ -43,7 +42,7 @@ class Matrix:
         (rows, cols) = self.domain
         if index not in cols:
             return []
-        domain = cartesianProduct(rows, set(index))
+        domain = gutil.cartesianProduct(rows, set(index))
         entries = [self.getItem(key) for key in domain]
         return entries
 
@@ -51,7 +50,7 @@ class Matrix:
         (rows, cols) = mat.domain
         rows = sorted(rows)
         cols = sorted(cols)
-        indice = cartesianProduct(rows, cols)
+        indice = gutil.cartesianProduct(rows, cols)
         label = '    ' + ' '.join(cols)
         for index in rows:
             entries = mat.row(index)
@@ -66,5 +65,5 @@ def eye(indices):
     n = len(indices)
     if n < 1:
         return None
-    func = {key:1 for key in cartesianProduct(indices, indices) if key[0] is key[1]}
-    return Matrix((indices, indices), func)
+    func = {key:1 for key in gutil.cartesianProduct(indices, indices) if key[0] is key[1]}
+    return matrix((indices, indices), func)

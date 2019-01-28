@@ -1,10 +1,8 @@
 # Author  : Gu-hwan Bae
 # Date    : Sun Jan 27
-# Summary : Vector modeling
+# Summary : Modeling a vector.
 
-# Vector can be expressed as a function that map domain to the corresponding field.
-# class Vector describe a vector of the real number field.
-class Vector:
+class vector:
     """
     Vector can be expressed as a function that map domain to the corresponding field.
     It describe a vector of the real number field.
@@ -32,3 +30,19 @@ class Vector:
         for d in self.domain:
             label = label + '\n' + str(d) + ' | ' + str(self.getItem(d))
         return label
+
+def zeros(domain):
+    """
+    Return a zero vector.
+    """
+    return vector(domain, {}) # It has empty entries.
+
+def multiply(v, alpha):
+    """
+    Return a vector elementwise multiplied.
+    """
+    return vector(v.domain, {d:alpha*val for d, val in v.func.items()})
+
+def add(u, v):
+    if u.domain is v.domain:
+        return vector(u.domain, {d:v.getItem(d)+u.getItem(d) for d in u.domain})
