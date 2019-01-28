@@ -2,6 +2,7 @@
 # Date    : Sun Jan 28
 # Summary : Modeling a matrix.
 
+import gula.vec as gvec
 import gula.util as gutil
 
 class matrix:
@@ -17,53 +18,68 @@ class matrix:
     def getItem(self, key):
         return self.func[key] if key in self.func else 0
 
-    def setItem(self, key, value):
-        (rows, cols) = self.domain
-        indice = gutil.cartesianProduct(rows, cols)
-        if key not in indices:
+    def setItem(self, key, val):
+        (row, col) = self.domain
+        if key not in gutil.cartesianProduct(row, col):
             return None
-        self.func[key] = value
+        self.func[key] = val
 
-    def row(self, index):
+    def entries(self, d, mode='row'):
         """
-        Return entries of row vector.
+        Return entries of row vector or column set sorted by laxicogrhapical.
+        Parameter 'd' is element of row or column set.
+        mode : str{'row', 'col'} optional
+            'row'
+                The output is a row vector.
+            'col'
+                The output is a column vector.
         """
-        (rows, cols) = self.domain
-        if index not in rows:
-            return []
-        domain = gutil.cartesianProduct(set(index), cols)
-        entries = [self.getItem(key) for key in domain]
-        return entries
+        (row, col) = self.domain
+        if mode is 'row' and d in row:
+            domain = gutil.cartesianProduct(set(d), sorted(col))
+        elif mode is 'col' and d in col:
+            domain = gutil.cartesianProduct(set(d), sorted(row))
+        else:
+            return None
+        return [self.getItem(d) for d in domain]
 
-    def col(self, index):
+    def row(self, r):
         """
-        Return entries of column vector.
+        Return a row vector.
+        Parameter 'r' is element of column set.
         """
-        (rows, cols) = self.domain
-        if index not in cols:
-            return []
-        domain = gutil.cartesianProduct(rows, set(index))
-        entries = [self.getItem(key) for key in domain]
-        return entries
+        (row, col) = self.domain
+        if r not in row:
+            return None
+        return gvec.vector(col, {c:self.func[(r,c)] for c in col if (r,c) in self.func})
+
+    def col(self, c):
+        """
+        Return a column vector.
+        Parameter 'c' is element of column set.
+        """
+        (row, col) = self.domain
+        if c not in col:
+            return None
+        return gvec.vector(row, {r:self.func[(r,c)] for r in row if (r,c) in self.func})
 
     def __str__(mat):
-        (rows, cols) = mat.domain
-        rows = sorted(rows)
-        cols = sorted(cols)
-        indice = gutil.cartesianProduct(rows, cols)
-        label = '    ' + ' '.join(cols)
-        for index in rows:
-            entries = mat.row(index)
+        (row, col) = mat.domain
+        row = sorted(row)
+        col = sorted(col)
+        indice = gutil.cartesianProduct(row, col)
+        label = '    ' + ' '.join(col)
+        for index in row:
+            entries = mat.entries(index, mode='row')
             label = label + '\n'
             label = label + str(index) + ' | ' + ' '.join(str(elem) for elem in entries)
         return label
 
-def eye(indices):
+def eye(row):
     """
     Return a identical matrix.
     """
-    n = len(indices)
-    if n < 1:
+    if len(row) < 1:
         return None
-    func = {key:1 for key in gutil.cartesianProduct(indices, indices) if key[0] is key[1]}
-    return matrix((indices, indices), func)
+    func = {(r,c):1 for (r,c) in gutil.cartesianProduct(row, row) if r is c}
+    return matrix((row, row), func)

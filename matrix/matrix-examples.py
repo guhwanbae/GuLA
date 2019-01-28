@@ -16,3 +16,12 @@ print(M)
 I = gmat.eye({'x','y','z'})
 print('Identical matrix, I, 3x3')
 print(I)
+
+print('Row vectors of Matrix M')
+(row, col) = M.domain
+for r in row:
+    print('Row vector, r =', r)
+    print(M.row(r))
+for c in col:
+    print('Column vector, c =', c)
+    print(M.col(c))
