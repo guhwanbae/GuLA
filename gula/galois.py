@@ -16,6 +16,8 @@ class GF2:
         return self + oth
     def __mul__(self, oth):
         return GF2(1) if self.bit is oth.bit and self.bit is 1 else GF2(0)
+    def __eq__(self, oth):
+        return self.bit is oth.bit
     def __repr__(self):
         return str(self.bit)
     def __str__(self):
