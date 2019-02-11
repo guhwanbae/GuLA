@@ -4,6 +4,8 @@
 
 import gula.vec as gvec
 import gula.mat as gmat
+import gula.galois as gf
+import numpy as np
 
 def cartesianProduct(set_a, set_b):
     return [(a, b) for a in set_a for b in set_b]
@@ -27,3 +29,18 @@ def dot(u, v):
                 output = output + u.col(c) * v.getItem(c)
             return output
     return None
+
+def listlist2mat(listlist):
+    listlist = np.asarray(listlist)
+    (row, col) = listlist.shape
+    R = set(str(r) for r in range(row))
+    C = set(str(c) for c in range(col))
+    return gmat.matrix((R, C),
+                       {(str(r), str(c)) : listlist[r][c] for r in range(row) for c in range(col)})
+
+def asGF2(arr):
+    src = np.asarray(arr)
+    ones_indice = (src == 1)
+    output = np.full(src.shape, gf.GF2(0))
+    output[ones_indice] = gf.GF2(1)
+    return output

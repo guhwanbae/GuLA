@@ -68,7 +68,6 @@ class matrix:
         (row, col) = mat.domain
         row = sorted(row)
         col = sorted(col)
-        indice = gutil.cartesianProduct(row, col)
         label = '    ' + ' '.join(col)
         for index in row:
             entries = mat.entries(index, mode='row')
