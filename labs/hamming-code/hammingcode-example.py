@@ -9,15 +9,15 @@ import gula.util as gutil
 G = hc.getGenerator()
 
 # Plain message vector, p
-p = gutil.asGF2([1, 0, 0, 1])
-print('Plain message =', p)
+p = gutil.asGF2([1, 1, 0, 1])
+print('Plain message, p =', p)
 
 # Code word vector, c
 c = np.dot(G, p)
-print('Code word =', c)
+print('Code word, c = G*p =', c)
 
+# Parity check matrix, H
 H = hc.getParityChecker()
-print('H*G =\n', np.dot(H, G))
 
 # Decoder matrix, R
 R = hc.getDecoder()
@@ -28,13 +28,17 @@ e = hc.getErrorWord()
 print('Error word, e =', e)
 
 c_noised = c + e
+print('c_noised = c + e =', c_noised)
+
 print('H*c_noised = H*e =',np.dot(H, c_noised))
 
 ep = hc.findErrorWord(c_noised)
 print('Error word, ep =', ep)
-c_denoised = c_noised + ep
 
-print('Deocded code word, R*c_denoised =', np.dot(R, c_denoised))
+c_denoised = c_noised + ep
+print('c_denoised = c_noised + e =', c_denoised)
+
+print('Deocded code word, d = R*c_denoised =', np.dot(R, c_denoised))
 
 c_noised = gutil.asGF2([1, 0, 1, 1, 0, 1, 1])
 print('H*e =', np.dot(H, c_noised))

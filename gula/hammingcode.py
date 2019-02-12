@@ -10,13 +10,13 @@ def getGenerator():
     """
     Return a generator matrix in GF(2).
     """
-    G = gutil.asGF2([[1, 0, 1, 1],
-                     [1, 1, 0, 1],
-                     [0, 0, 0, 1],
-                     [1, 1, 1, 0],
-                     [0, 0, 1, 0],
+    G = gutil.asGF2([[1, 1, 0, 1],
+                     [1, 0, 1, 1],
+                     [1, 0, 0, 0],
+                     [0, 1, 1, 1],
                      [0, 1, 0, 0],
-                     [1, 0, 0, 0]])
+                     [0, 0, 1, 0],
+                     [0, 0, 0, 1]])
     return G 
 
 def getDecoder():
@@ -33,9 +33,9 @@ def getParityChecker():
     """
     Return a parity check matrix in GF(2).
     """
-    H = gutil.asGF2([[0, 0, 0, 1, 1, 1, 1],
+    H = gutil.asGF2([[1, 0, 1, 0, 1, 0, 1],
                      [0, 1, 1, 0, 0, 1, 1],
-                     [1, 0, 1, 0, 1, 0, 1]])
+                     [0, 0, 0, 1, 1, 1, 1]])
     return H
 
 def getErrorWord(error_ratio = 0.5):
@@ -55,7 +55,7 @@ def findErrorWord(c):
     """
     H = getParityChecker()
     # Parity error vector, pe
-    pe = np.flip(np.dot(H, c))
+    pe = np.dot(H, c)
     index = -1
     for n in range(3):
         if pe[n] == gf.GF2(1):
