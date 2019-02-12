@@ -75,3 +75,13 @@ def findErrorMatrix(mat_code_words):
     S = np.asarray(mat_code_words)
     (nrow , ncol) = S.shape
     return np.array([findErrorWord(S[:,c]) for c in range(ncol)]).T
+
+def bits2matrix(bits, nrow = 4):
+    return gutil.asGF2(bits).reshape(-1, nrow).T
+
+def matrix2bits(matrix, order='F'):
+    """
+    Return bit list flatten in column major.
+    Parameter oder 'F' means 'Fotran style', column major.
+    """
+    return gutil.gf2toint(np.asarray(matrix).flatten(order))
