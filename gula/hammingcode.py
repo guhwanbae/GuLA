@@ -85,3 +85,12 @@ def matrix2bits(matrix, order='F'):
     Parameter oder 'F' means 'Fotran style', column major.
     """
     return gutil.gf2toint(np.asarray(matrix).flatten(order))
+
+def noiseChannel(C, ratio = 0.5):
+    """
+    Return a noised matrix by adding error matrix, E, that generated
+    by uniform random distribution, (ratio, 1-ratio).
+    """
+    (nrow, ncol) = C.shape
+    E = np.array([getErrorWord(ratio) for n in range(ncol)]).T
+    return C+E
