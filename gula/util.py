@@ -42,6 +42,10 @@ def asGF2(arr):
     """
     Return a numpy array that elements are converted to GF(2).
     """
+    if type(arr) is np.ndarray:
+        if arr.size is not 0 and type(arr.item(0)) is gf.GF2 :
+            return arr
+
     src = np.asarray(arr)
     ones_indice = (src == 1)
     output = np.full(src.shape, gf.GF2(0))
