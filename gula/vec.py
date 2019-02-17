@@ -22,6 +22,9 @@ class vector:
         if key in self.domain:
             self.func[key] = val
 
+    def entries(self):
+        return [self.func[d] for d in self.domain]
+
     def __add__(self, oth):
         """
         Elementwise addition.
@@ -78,3 +81,10 @@ def zeros(domain):
     Return a zero vector.
     """
     return vector(domain, {}) # It has empty entries.
+
+def getVector(domain, entries):
+    """
+    Return gula.vec.vector. Parameter domain and entries should be in order.
+    """
+    func = {d : entry for d, entry in zip(domain, entries)}
+    return vector(set(domain), func)

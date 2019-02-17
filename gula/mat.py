@@ -64,6 +64,16 @@ class matrix:
             return None
         return gvec.vector(row, {r:self.func[(r,c)] for r in row if (r,c) in self.func})
 
+    def addColumn(self, c, vec):
+        """
+        Parameter 'c' is the label element to add vector as column vector.
+        """
+        (R, C) = self.domain
+        if R == vec.domain and c in C:
+            D = gutil.cartesianProduct(R, set(c))
+            for d, entry in zip(D, vec.entries()):
+                self.func[d] = entry
+    
     def __str__(mat):
         (row, col) = mat.domain
         row = sorted(row)
@@ -79,7 +89,18 @@ def eye(row):
     """
     Return a identical matrix.
     """
-    if len(row) < 1:
+    R = set(row)
+    if len(R) < 1:
         return None
-    func = {(r,c):1 for (r,c) in gutil.cartesianProduct(row, row) if r is c}
-    return matrix((row, row), func)
+    func = {(r,c):1 for (r,c) in gutil.cartesianProduct(R, R) if r is c}
+    return matrix((R, R), func)
+
+def listlist2matrix(R, C, listlist):
+    """
+    Return a matrix that entries are elements of listlist.
+    Parameter 'R' is label of row and 'P' is label of column.
+    """
+    entries = [entry for row in listlist for entry in row]
+    D = gutil.cartesianProduct(R, C)
+    func = {(r, c) : entry for (r, c), entry in zip(D, entries)}
+    return matrix((set(R), set(C)), func)

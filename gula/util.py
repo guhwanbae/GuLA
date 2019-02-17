@@ -17,16 +17,24 @@ def dot(u, v):
     linear combination of column vectors of matrix that scalar multiplied
     by coressponding element of vector, v[c].
     """
-    if isinstance(u, gvec.vector) and isinstance(v, gvec.vector):
-        print('vec-vec')
-        if u.domain is v.domain:
+    if type(u) is gvec.vector and type(v) is gvec.vector:
+        if u.domain == v.domain:
             return sum([u.getItem(d) * v.getItem(d) for d in u.domain])
-    elif isinstance(u, gmat.matrix) and isinstance(v, gvec.vector):
-        (row, col) = u.domain
-        if col is v.domain:
-            output = gvec.vector(row, {})
-            for c in col:
+    elif type(u) is gmat.matrix and type(v) is gvec.vector:
+        (R, C) = u.domain
+        if C == v.domain:
+            output = gvec.vector(R, {})
+            for c in C:
                 output = output + u.col(c) * v.getItem(c)
+            return output
+    elif type(u) is gmat.matrix and type(v) is gmat.matrix:
+        (Ru, Cu) = u.domain
+        (Rv, Cv) = v.domain
+        if Cu == Rv:
+            output = gmat.matrix((Ru, Cv), {})
+            for cv in Cv:
+                column_vec = dot(u, v.col(cv))
+                output.addColumn(cv, column_vec)
             return output
     return None
 
