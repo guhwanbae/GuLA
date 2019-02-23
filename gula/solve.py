@@ -33,9 +33,9 @@ class gaussian:
         """
         (nonzero_rows, ) = np.nonzero(M[:, col_idx])
         return nonzero_rows
-    def getRowEcholenForm(M):
+    def getRowEchelonForm(M):
         """
-        Return a matrix as row echolen form.
+        Return a matrix as row echelon form.
         """
         (nrows, ncols) = M.shape
         for col_idx in range(ncols):
