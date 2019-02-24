@@ -38,19 +38,22 @@ class gaussian:
         Return a matrix as row echelon form.
         """
         (nrows, ncols) = M.shape
+        stage = 0
         for col_idx in range(ncols):
-            print('>> Iteration =', col_idx)
-            nonzero_rows = gaussian.findNonZeroRows(M[col_idx:], col_idx)
-            nonzero_rows = nonzero_rows + col_idx
+            print('>> Iteration = %s, Stage = %d' % (col_idx, stage))
+            nonzero_rows = gaussian.findNonZeroRows(M[stage:], col_idx)
+            nonzero_rows = nonzero_rows + stage
             print('Nonzero rows =', nonzero_rows)
             if nonzero_rows.size > 0:
                 pivot = nonzero_rows[0]
-                if pivot != col_idx:
-                    print('Swap R%d and R%d' % (pivot, col_idx))
-                    S = rowSwitchingMatrix(nrows, pivot, col_idx)
+                if pivot != stage:
+                    print('Swap R%d and R%d' % (pivot, stage))
+                    S = rowSwitchingMatrix(nrows, pivot, stage)
                     M = np.dot(S, M)
-                    pivot = col_idx
+                    pivot = stage
             if nonzero_rows.size < 2:
+                if nonzero_rows.size == 1:
+                    stage = stage + 1
                 print('Skip')
                 continue
             pivot_scalar = M[pivot][col_idx]
@@ -60,5 +63,6 @@ class gaussian:
                 N = rowAdditionMatrix(nrows, a, row_idx, pivot)
                 M = np.dot(N, M)
                 print('R%d = R%d + %s*R%d' % (row_idx, row_idx, a, pivot))
+            stage = stage + 1
             print('M =\n', M)
         return M
