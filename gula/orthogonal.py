@@ -51,3 +51,24 @@ def findSubsetBasis(V):
     '''
     P, S = orthogonalize(V)
     return np.array([h for h in P.T if np.linalg.norm(h) > 1e-20])
+
+def normal(b, V):
+    '''
+    Return a normal vector for Span {V}.
+    The column vectors of matrix V are linear independent.
+    The parameter b is arbitrary vector not in Span {V}.
+    '''
+    P, S = orthogonalize(V)
+    h, sigma = projectionOrthogonal(b, P)
+    return h / np.linalg.norm(h)
+
+def orthogonalComplement(U, W):
+    '''
+    Return a basis for orthogonal complement.
+    The parameter U is a basis for sub-space U belonging to W.
+    The column vectors of matrice represent a basis vector.
+    '''
+    (nrows, ncols) = U.shape
+    V = np.concatenate((U, W), axis=1)
+    B = findSubsetBasis(V)
+    return B[:,ncols:]
