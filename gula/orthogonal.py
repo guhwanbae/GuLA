@@ -50,7 +50,8 @@ def findSubsetBasis(V):
     Return a matrix that column is a basis. The parameter V is a set of generators.
     '''
     P, S = orthogonalize(V)
-    return np.array([h for h in P.T if np.linalg.norm(h) > 1e-20])
+    B = np.array([p for p in P.T if np.linalg.norm(p) > 1e-20]).T
+    return B
 
 def normal(b, V):
     '''
