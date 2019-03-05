@@ -16,37 +16,38 @@ def projectionOrthogonal(b, V):
     The column vectors of input matrix V are linear independent each other.
     The output vector sigma represent a linear combination coefficient
     of column vectors of V and reference vector b.
-    b = [v1 | ... | vn | h] * sigma
+    b = [v1 | ... | vn | b_orthogonal] * sigma
     '''
-    h = b
+    b_orthogonal = b
     (nrows, ncols) = V.shape
     sigma = np.zeros(ncols+1)
     if sigma.size > 0:
         sigma[-1] = 1.0
     for i,v in enumerate(V.T):
-        sigma[i] = projectionAlong(h, v)
-        h = h - sigma[i]*v
-    return h, sigma
+        sigma[i] = projectionAlong(b_orthogonal, v)
+        b_orthogonal = b_orthogonal - sigma[i]*v
+    return b_orthogonal, sigma
 
 def orthogonalize(V):
     '''
     Return a matrix that column is a orthogonalized vector each other.
     The column vectors of input matrix V are generator of Span{V}.
-    The output matrix H has null column vector when V has linear dependent vectors.
+    The output matrix P has null column vector when V has linear dependent vectors.
     The output matrix S is a transform matrix.
-    V = H*S.
+    V = P * S.
     '''
     (nrows, ncols) = V.shape
-    H = np.zeros(V.shape)
+    P = np.zeros(V.shape)
     S = np.zeros((ncols, ncols))
     for i,v in enumerate(V.T):
-        h, sigma = projectionOrthogonal(v, H[:,:i])
-        H[:,i] = h
+        p, sigma = projectionOrthogonal(v, P[:,:i])
+        P[:,i] = p
         S[:len(sigma),i] += sigma
-    return H, S
+    return P, S
 
 def findSubsetBasis(V):
     '''
     Return a matrix that column is a basis. The parameter V is a set of generators.
     '''
-    return np.array([h for h in orthogonalize(V) if np.linalg.norm(h) > 1e-20])
+    P, S = orthogonalize(V)
+    return np.array([h for h in P.T if np.linalg.norm(h) > 1e-20])
