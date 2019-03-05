@@ -42,7 +42,7 @@ V = np.array([[1, 2, 3],
               [0, 4, 5],
               [0, 0, 6]]).T
 
-Q = gortho.orthonormalize(V)
+Q, R = gortho.orthonormalize(V)
 print('Orthonormalized Q =\n', Q)
 
 '''

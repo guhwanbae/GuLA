@@ -49,9 +49,9 @@ def orthonormalize(V):
     '''
     Return a matrix that column vectors are orthonormalized.
     '''
-    P = findSubsetBasis(V)
+    P, S = findSubsetBasis(V)
     scaler = np.array([np.linalg.norm(p) for p in P.T])
-    return P / scaler
+    return P / scaler, S * scaler[:,np.newaxis]
 
 def findSubsetBasis(V):
     '''
@@ -59,7 +59,7 @@ def findSubsetBasis(V):
     '''
     P, S = orthogonalize(V)
     B = np.array([p for p in P.T if np.linalg.norm(p) > 1e-20]).T
-    return B
+    return B, S
 
 def normal(b, V):
     '''
@@ -79,5 +79,5 @@ def orthogonalComplement(U, W):
     '''
     (nrows, ncols) = U.shape
     V = np.concatenate((U, W), axis=1)
-    B = findSubsetBasis(V)
+    B, S = findSubsetBasis(V)
     return B[:,ncols:]
