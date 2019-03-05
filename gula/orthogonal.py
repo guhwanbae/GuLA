@@ -45,6 +45,14 @@ def orthogonalize(V):
         S[:len(sigma),i] += sigma
     return P, S
 
+def orthonormalize(V):
+    '''
+    Return a matrix that column vectors are orthonormalized.
+    '''
+    P = findSubsetBasis(V)
+    scaler = np.array([np.linalg.norm(p) for p in P.T])
+    return P / scaler
+
 def findSubsetBasis(V):
     '''
     Return a matrix that column is a basis. The parameter V is a set of generators.
