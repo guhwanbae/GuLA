@@ -50,6 +50,9 @@ def orthonormalize(V):
     Return a matrix that column vectors are orthonormalized.
     '''
     P, S = findSubsetBasis(V)
+    # If Col V is not linear independent, It can not be normalized.
+    if P.shape[1] != V.shape[1]:
+        return None
     scaler = np.array([np.linalg.norm(p) for p in P.T])
     return P / scaler, S * scaler[:,np.newaxis]
 
