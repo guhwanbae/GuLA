@@ -49,9 +49,9 @@ def haar2dinv(W):
     (nrows, ncols) = W.shape
     data = np.zeros(W.shape)
     for c in range(ncols):
-        data[:,c] = gwavelet.haarinv(W[:,c])
+        data[:,c] = haarinv(W[:,c])
     for r in range(nrows):
-        data[r] = gwavelet.haarinv(data[r])
+        data[r] = haarinv(data[r])
     return data
 
 def __haar1d_inverse__(w):
