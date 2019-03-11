@@ -29,6 +29,31 @@ def haar(data):
         return None
     return __haar1d__(data)
 
+def haar2d(data):
+    '''
+    Transform given data to the unnormalized 2D haar wavelet coefficients.
+    '''
+    (nrows, ncols) = data.shape
+    W = np.zeros(data.shape)
+    for r in range(nrows):
+        W[r] = haar(data[r])
+    for c in range(ncols):
+        W[:,c] = haar(W[:,c])
+    return W
+
+def haar2dinv(W):
+    '''
+    Inverse unnormalized wavelet coefficients for 2D haar basis
+    to the original domain.
+    '''
+    (nrows, ncols) = W.shape
+    data = np.zeros(W.shape)
+    for c in range(ncols):
+        data[:,c] = gwavelet.haarinv(W[:,c])
+    for r in range(nrows):
+        data[r] = gwavelet.haarinv(data[r])
+    return data
+
 def __haar1d_inverse__(w):
     '''
     Inverse unnormalized wavelet coefficients for 1D haar basis
