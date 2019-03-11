@@ -81,3 +81,11 @@ def bits2str(bits):
     B = np.asarray(bits).reshape(-1, 8)
     mask = np.array([1 << n for n in range(8)])
     return ''.join(chr(enc) for enc in sum((B*mask).T))
+
+def isPowerOfTwo(n):
+    '''
+    Check a given number is power of two.
+    '''
+    if n & (n - 1):
+        return False
+    return True
