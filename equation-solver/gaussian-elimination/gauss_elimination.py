@@ -1,7 +1,7 @@
 # Author  : Gu-hwan Bae
 # Summary : Get a row echelon form.
 
-import gula.solve as gsolve
+import gula.gaussian as ggaussian
 import numpy as np
 
 # Case I
@@ -10,7 +10,7 @@ M = np.array([[1, 2, 3],
               [1, 2, 4],
               [3, 7, 4]])
 
-G = gsolve.gaussian.getRowEchelonForm(M)
+G = ggaussian.echelon(M)
 
 # Matrix G has three basis.
 print('>> Echelon form matrix =\n', G)
@@ -21,7 +21,7 @@ M = np.array([[1, 2, 4],
               [1, 2, 4],
               [3, 7, 4]])
 
-G = gsolve.gaussian.getRowEchelonForm(M)
+G = ggaussian.echelon(M)
 
 # Matrix G has two basis.
 print('>> Echelon form matrix =\n', G)
@@ -32,7 +32,7 @@ M = np.array([[0, 0, 1],
               [0, 1, 0],
               [1, 0, 0]])
 
-G = gsolve.gaussian.getRowEchelonForm(M)
+G = ggaussian.echelon(M)
 
 # Matrix G has three basis.
 print('>> Echelon form matrix =\n', G)
@@ -43,7 +43,7 @@ M = np.array([[2, 2, 2],
               [4, 4, 4],
               [6, 6, 6]])
 
-G = gsolve.gaussian.getRowEchelonForm(M)
+G = ggaussian.echelon(M)
 
 # Matrix G has three basis.
 print('>> Echelon form matrix =\n', G)
