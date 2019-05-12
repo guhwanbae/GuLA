@@ -1,4 +1,4 @@
-# Hello-LinearAlgebra
+# GuLA, Gu's Linear Algebra
 Learn linear algebra and application.
 
 Tiny project : gula package, guhwan's linear algebra package
@@ -17,6 +17,7 @@ Topics :
 
 Textbook :
 1) Introduction to Linear algebra (Fifth Edition), Gilbert Strang.
+2) Coding the Matrix: Linear Algebra through Computer Science Applications (First Edition), Philip N. Klein
 
 Libraries :
 1) Numpy, Scientific computing library for Python
