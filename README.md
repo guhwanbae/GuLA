@@ -1,13 +1,14 @@
 # GuLA, Gu's Linear Algebra
-Learn linear algebra and application.
+Learn linear algebra and its application.
 
-Tiny project : gula package, guhwan's linear algebra package
+Toy project : gula package, guhwan's linear algebra package
 1) Naive implementation of linear algebra algorithm.
-   It contains decomposition, optimization, orthogonalization, etc.
-2) Several signal processing topics.
-   It contains descrete fourier transform, haar wavelet, etc.
+   It contains matrix decomposition, vector orthogonalization, equation solver,
+   simplex(1D linear programming) and etc.
+2) Signal processing topics.
+   It contains DFT(descrete fourier transform), Haar wavelet and etc.
 3) Couple of problems about number theory.
-   About galois field, hamming code labs by using gula package.
+   About Galois field, Hamming code problems with gula package.
 
 
 Topics : 
@@ -21,7 +22,6 @@ Textbook :
 
 Libraries :
 1) Numpy, Scientific computing library for Python
-   (In this procject, I will use Python 3.x)
+   (In this procject, Python 3.7.x)
 2) Eigen, Simple header only library for C++
 3) Xtensor, Similar interface to Numpy, C++
-   (Specially requires C++ 14)
